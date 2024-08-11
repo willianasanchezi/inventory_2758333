@@ -7,7 +7,7 @@ const ProductForm = () => {
         <div>
             <h2>Product Management</h2>
             {/* Formulario CRUD para producto */}
-            <BackToMenuButton />
+            {/* <BackToMenuButton /> */}
         </div>
     );
 };

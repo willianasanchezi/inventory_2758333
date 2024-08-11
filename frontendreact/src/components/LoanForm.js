@@ -7,7 +7,7 @@ const LoanForm = () => {
         <div>
             <h2>Loan Management</h2>
             {/* Formulario CRUD para prestamo */}
-            <BackToMenuButton />
+            {/* <BackToMenuButton /> */}
         </div>
     );
 };

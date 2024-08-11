@@ -7,7 +7,7 @@ const MaintenanceForm = () => {
         <div>
             <h2>Maintenance Management</h2>
             {/* Formulario CRUD para mantenimiento */}
-            <BackToMenuButton />
+            {/* <BackToMenuButton /> */}
         </div>
     );
 };

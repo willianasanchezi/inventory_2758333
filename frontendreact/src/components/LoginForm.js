@@ -10,7 +10,6 @@ const LoginForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         try {
             const response = await fetch('http://localhost:8080/inventory/api/auth/login', {
                 method: 'POST',
@@ -26,7 +25,7 @@ const LoginForm = () => {
 
             const data = await response.json();
             console.log('Token:', data.token);
-            alert('Login successful!');
+            //alert('Login successful!');
             login(); // Llama a la función de login del contexto de autenticación
         } catch (error) {
             console.error('Error:', error);
@@ -35,13 +34,14 @@ const LoginForm = () => {
     };
 
     return (
-        <div>
+        <div className="container mt-5">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label htmlFor="username">Username:</label>
                     <input
                         type="text"
+                        className="form-control"
                         id="username"
                         name="username"
                         value={username}
@@ -49,10 +49,11 @@ const LoginForm = () => {
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label htmlFor="password">Password:</label>
                     <input
                         type="password"
+                        className="form-control"
                         id="password"
                         name="password"
                         value={password}
@@ -60,9 +61,9 @@ const LoginForm = () => {
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <div className="alert alert-danger mt-3">{error}</div>}
         </div>
     );
 };

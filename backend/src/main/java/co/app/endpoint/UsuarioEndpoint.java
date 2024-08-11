@@ -1,4 +1,5 @@
-package co.app.resources;  
+//UsuarioEndpoint.java
+package co.app.resources;
   
 import co.app.dao.UsuarioDAO;  
 import co.app.model.Usuario;  
