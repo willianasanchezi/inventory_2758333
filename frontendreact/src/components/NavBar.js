@@ -1,17 +1,20 @@
 // src/components/NavBar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const NavBar = () => {
+    const { logout } = useAuth();
+
     return (
         <nav>
             <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
+
+                <li><button onClick={logout}>Logout</button></li>
             </ul>
         </nav>
     );
 };
 
 export default NavBar;
+

@@ -1,38 +1,29 @@
 // src/App.js
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginForm from './components/LoginForm';
+import Menu from './components/Menu';
 import NavBar from './components/NavBar';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-const Home = () => <h2>Home Page</h2>;
-const About = () => <h2>About Page</h2>;
-const Contact = () => <h2>Contact Page</h2>;
+const PrivateRoute = ({ element }) => {
+    const { isAuthenticated } = useAuth();
+    return isAuthenticated ? element : <Navigate to="/login" />;
+};
 
 const App = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-    const handleLogin = (username, password) => {
-        // Simula autenticación
-        if (username === 'admin' && password === 'admin') {
-            setIsAuthenticated(true);
-        }
-    };
-
-    if (!isAuthenticated) {
-        // Mostrar el componente de login si no está autenticado
-        return <Login onLogin={handleLogin} />;
-    }
-
     return (
         <Router>
-            <NavBar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/menu" element={<PrivateRoute element={<Menu />} />} />
+                    <Route path="/" element={<Navigate to="/menu" />} />
+                </Routes>
+            </AuthProvider>
         </Router>
     );
 };
 
 export default App;
+
