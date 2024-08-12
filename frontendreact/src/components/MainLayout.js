@@ -1,7 +1,7 @@
 // src/components/MainLayout.js
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Menu from './Menu';
+import Menu from './Dashboard';
 
 const MainLayout = () => {
     return (

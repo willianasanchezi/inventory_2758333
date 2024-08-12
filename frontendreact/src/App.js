@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
-import Menu from './components/Menu';
+import Dashboard from './components/Dashboard';
 import MainLayout from './components/MainLayout';
 import NavBar from './components/NavBar';
 import RoleForm from './components/RoleForm';
