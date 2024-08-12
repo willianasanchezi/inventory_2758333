@@ -19,7 +19,6 @@ import java.sql.SQLException;
 
 @Path("/auth")
 public class LoginEndpoint {
-
     private static final String SECRET_KEY = "your_secret_key"; // Cambia esto a una clave secreta segura
 
     @POST
@@ -27,9 +26,11 @@ public class LoginEndpoint {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(UserCredentials credentials) {
-        if (authenticateUser(credentials.getUsername(), credentials.getPassword())) {
+        AuthResult authResult = authenticateUser(credentials.getUsername(), credentials.getPassword());
+        if (authResult.isAuthenticated()) {
             String token = JWT.create()
                     .withSubject(credentials.getUsername())
+                    .withClaim("roles", authResult.getRole())
                     .sign(Algorithm.HMAC256(SECRET_KEY));
             return Response.ok(new AuthResponse(token)).build();
         } else {
@@ -37,21 +38,25 @@ public class LoginEndpoint {
         }
     }
 
-    private boolean authenticateUser(String username, String password) {
+    private AuthResult authenticateUser(String username, String password) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
         try {
             conn = DatabaseConnection.getConnection();
-            String sql = "SELECT contrasena FROM usuarios WHERE correo_electronico = ?";
+            String sql = "SELECT contrasena, codigo_rol FROM usuarios WHERE correo_electronico = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             rs = stmt.executeQuery();
-
             if (rs.next()) {
                 String storedPassword = rs.getString("contrasena");
-                return checkPassword(password, storedPassword);
+                if (checkPassword(password, storedPassword)) {
+                    int roleId = rs.getInt("codigo_rol");
+                    String role = getRoleById(roleId, conn);
+                    if (role != null) {
+                        return new AuthResult(true, role);
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,8 +65,20 @@ public class LoginEndpoint {
             try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
             try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
+        return new AuthResult(false, null);
+    }
 
-        return false;
+    private String getRoleById(int roleId, Connection conn) throws SQLException {
+        String sql = "SELECT nombre_permiso FROM roles WHERE codigo_rol = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, roleId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("nombre_permiso");
+                }
+            }
+        }
+        return null;
     }
 
     private boolean checkPassword(String plainPassword, String hashedPassword) {
@@ -105,6 +122,24 @@ public class LoginEndpoint {
 
         public void setToken(String token) {
             this.token = token;
+        }
+    }
+
+    public class AuthResult {
+        private boolean authenticated;
+        private String role;
+
+        public AuthResult(boolean authenticated, String role) {
+            this.authenticated = authenticated;
+            this.role = role;
+        }
+
+        public boolean isAuthenticated() {
+            return authenticated;
+        }
+
+        public String getRole() {
+            return role;
         }
     }
 }

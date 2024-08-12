@@ -1,6 +1,9 @@
 // src/components/LoginForm.js
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+//import jwtDecode from 'jwt-decode'; // Asegúrate de instalar jwt-decode con `npm install jwt-decode`
+//import { decode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -18,15 +21,17 @@ const LoginForm = () => {
                 },
                 body: JSON.stringify({ username, password })
             });
-
             if (!response.ok) {
                 throw new Error('Invalid username or password');
             }
-
             const data = await response.json();
+            console.log('Data JSON:', data);
+            const decodedToken = jwtDecode(data.token);
+            console.log('Decoded Token:', decodedToken); // Agregar esta línea para depurar
+            const roles = decodedToken.roles; // Asume que el token tiene un campo 'roles'
+            console.log('Roles from token:', roles); // Agregar esta línea para depurar
             console.log('Token:', data.token);
-            //alert('Login successful!');
-            login(); // Llama a la función de login del contexto de autenticación
+            login(data.token, roles);
         } catch (error) {
             console.error('Error:', error);
             setError('Login failed: ' + error.message);

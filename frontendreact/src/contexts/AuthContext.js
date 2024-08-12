@@ -6,20 +6,32 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [token, setToken] = useState(null);
+    const [roles, setRoles] = useState([]); // Inicializar roles con un array vacío
     const navigate = useNavigate();
 
-    const login = () => {
+    const login = (token, roles) => {
         setIsAuthenticated(true);
+        setToken(token);
+        setRoles(roles);
+        console.log('Roles after login:', roles); // Agregar esta línea para depurar
         navigate('/menu');
     };
 
     const logout = () => {
         setIsAuthenticated(false);
+        setToken(null);
+        setRoles([]);
         navigate('/login');
     };
 
+    const hasRole = (role) => {
+        console.log('Roles in hasRole:', roles); // Agregar esta línea para depurar
+        return roles && roles.includes(role); // Manejar el caso cuando roles es undefined
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, logout, hasRole }}>
             {children}
         </AuthContext.Provider>
     );
