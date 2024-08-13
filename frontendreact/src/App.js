@@ -10,6 +10,8 @@ import UserForm from './components/UserForm';
 import ProductForm from './components/ProductForm';
 import LoanForm from './components/LoanForm';
 import MaintenanceForm from './components/MaintenanceForm';
+import QueriesForm from './components/QueriesForm';
+import UserListForm from './components/UserListForm';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 const PrivateRoute = ({ element }) => {
@@ -26,6 +28,7 @@ const App = () => {
                     <Route path="/" element={<PrivateRoute element={<MainLayout />} />}>
                         <Route path="roles" element={<RoleForm />} />
                         <Route path="users" element={<UserForm />} />
+                        <Route path="users-list" element={<UserListForm />} />
                         <Route path="products" element={<ProductForm />} />
                         <Route path="loans" element={<LoanForm />} />
                         <Route path="maintenance" element={<MaintenanceForm />} />

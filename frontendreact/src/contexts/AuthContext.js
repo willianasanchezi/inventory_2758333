@@ -14,8 +14,8 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         setToken(token);
         setRoles(roles);
-        console.log('Roles after login:', roles); // Agregar esta línea para depurar
-        navigate('/menu');
+        console.log('Rol inicio sesion:', roles); // Agregar esta línea para depurar
+        navigate('/Dashboard');
     };
 
     const logout = () => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const hasRole = (role) => {
-        console.log('Roles in hasRole:', roles); // Agregar esta línea para depurar
+        console.log('Rol:', roles); // Agregar esta línea para depurar
         return roles && roles.includes(role); // Manejar el caso cuando roles es undefined
     };
 
