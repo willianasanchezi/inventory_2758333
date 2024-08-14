@@ -106,7 +106,7 @@ const UserForm = () => {
                             required
                         />
                     </div>
-                    {!id && (
+                    {/* {!id && ( */}
                         <div className="form-group">
                             <label>Contraseña</label>
                             <input
@@ -118,7 +118,7 @@ const UserForm = () => {
                                 required
                             />
                         </div>
-                    )}
+                    {/* })} */}
                     <div className="form-group">
                         <label>Rol</label>
                         <select

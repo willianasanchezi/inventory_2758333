@@ -35,6 +35,7 @@ const UserListForm = () => {
                         <th>Nombre Completo</th>
                         <th>Identificación</th>
                         <th>Correo Electrónico</th>
+                        {/* <th>Contraseña</th> */}
                         <th>Rol</th>
                         <th>Acciones</th>
                     </tr>
@@ -46,6 +47,7 @@ const UserListForm = () => {
                             <td>{user.nombreCompleto}</td>
                             <td>{user.identificacion}</td>
                             <td>{user.correoElectronico}</td>
+                            {/* <td>{user.contrasena}</td>  */}
                             <td>{getRoleName(user.codigoRol)}</td>
                             <td>
                                 <Link to={`/users/edit/${user.idUsuario}`} className="btn btn-warning btn-sm">Editar</Link>
