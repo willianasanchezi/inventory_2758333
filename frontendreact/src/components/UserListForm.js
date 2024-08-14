@@ -36,6 +36,7 @@ const UserListForm = () => {
                         <th>Identificación</th>
                         <th>Correo Electrónico</th>
                         <th>Rol</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,9 @@ const UserListForm = () => {
                             <td>{user.identificacion}</td>
                             <td>{user.correoElectronico}</td>
                             <td>{getRoleName(user.codigoRol)}</td>
+                            <td>
+                                <Link to={`/users/edit/${user.idUsuario}`} className="btn btn-warning btn-sm">Editar</Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -59,3 +63,4 @@ const UserListForm = () => {
 };
 
 export default UserListForm;
+

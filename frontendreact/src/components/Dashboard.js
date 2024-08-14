@@ -27,7 +27,7 @@ const Menu = () => {
                     </>
                 )}
                 <li className="list-group-item">
-                    <Link to="/products" className="nav-link">Productos</Link>
+                    <Link to="/productssearch" className="nav-link">Productos</Link>
                 </li>
                 <li className="list-group-item">
                     <Link to="/loans" className="nav-link">Préstamos</Link>

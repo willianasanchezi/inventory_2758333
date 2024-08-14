@@ -8,6 +8,7 @@ import NavBar from './components/NavBar';
 import RoleForm from './components/RoleForm';
 import UserForm from './components/UserForm';
 import ProductForm from './components/ProductForm';
+import ProductSearchForm from './components/ProductSearchForm';
 import LoanForm from './components/LoanForm';
 import MaintenanceForm from './components/MaintenanceForm';
 import QueriesForm from './components/QueriesForm';
@@ -28,10 +29,13 @@ const App = () => {
                     <Route path="/" element={<PrivateRoute element={<MainLayout />} />}>
                         <Route path="roles" element={<RoleForm />} />
                         <Route path="users" element={<UserForm />} />
+                        <Route path="users/edit/:id" element={<UserForm />} />
                         <Route path="users-list" element={<UserListForm />} />
                         <Route path="products" element={<ProductForm />} />
+                        <Route path="productssearch" element={<ProductSearchForm />} />
                         <Route path="loans" element={<LoanForm />} />
                         <Route path="maintenance" element={<MaintenanceForm />} />
+                        <Route path="queries" element={<QueriesForm />} />
                     </Route>
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>             </AuthProvider>

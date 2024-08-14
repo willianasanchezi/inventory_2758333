@@ -1,4 +1,5 @@
-package co.app.dao;  
+// co/app/dao/ProductoDAO.java
+package co.app.dao;
   
 import co.app.model.Producto;  
 import co.app.utils.DatabaseConnection;
@@ -122,5 +123,66 @@ public class ProductoDAO {
             e.printStackTrace();  
         }  
         return rowDeleted;  
-    }  
+    }
+
+    public List<Producto> buscarProductosConFiltros(String nombreProducto, String marca, String modelo, String cantidadMemoria, String capacidadDisco, Timestamp fechaRegistroInicio, Timestamp fechaRegistroFin) {
+        List<Producto> productosFiltrados = new ArrayList<>();
+        List<Object> parametros = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM productos WHERE 1=1");
+
+        if (nombreProducto != null && !nombreProducto.trim().isEmpty()) {
+            sql.append(" AND nombre_producto LIKE ?");
+            parametros.add("%" + nombreProducto.trim() + "%");
+        }
+        if (marca != null && !marca.trim().isEmpty()) {
+            sql.append(" AND marca = ?");
+            parametros.add(marca.trim());
+        }
+        if (modelo != null && !modelo.trim().isEmpty()) {
+            sql.append(" AND modelo = ?");
+            parametros.add(modelo.trim());
+        }
+        if (cantidadMemoria != null && !cantidadMemoria.trim().isEmpty()) {
+            sql.append(" AND cantidad_memoria = ?");
+            parametros.add(cantidadMemoria.trim());
+        }
+        if (capacidadDisco != null && !capacidadDisco.trim().isEmpty()) {
+            sql.append(" AND capacidad_disco = ?");
+            parametros.add(capacidadDisco.trim());
+        }
+        if (fechaRegistroInicio != null && fechaRegistroFin != null) {
+            sql.append(" AND fecha_registro BETWEEN ? AND ?");
+            parametros.add(fechaRegistroInicio);
+            parametros.add(fechaRegistroFin);
+        }
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString())) {
+            for (int i = 0; i < parametros.size(); i++) {
+                preparedStatement.setObject(i + 1, parametros.get(i));
+            }
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int idProducto = rs.getInt("id_producto");
+                String codigo = rs.getString("codigo");
+                String nombreProd = rs.getString("nombre_producto");
+                String descripcion = rs.getString("descripcion");
+                String marcaProd = rs.getString("marca");
+                String modeloProd = rs.getString("modelo");
+                String cantidadMem = rs.getString("cantidad_memoria");
+                String capacidadDisc = rs.getString("capacidad_disco");
+                String estado = rs.getString("estado");
+                int cantidad = rs.getInt("cantidad");
+                BigDecimal precioUnitario = rs.getBigDecimal("precio_unitario");
+                Timestamp fechaRegistro = rs.getTimestamp("fecha_registro");
+
+                Producto producto = new Producto(idProducto, codigo, nombreProd, descripcion, marcaProd, modeloProd, cantidadMem, capacidadDisc, estado, cantidad, precioUnitario, fechaRegistro);
+                productosFiltrados.add(producto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productosFiltrados;
+    }
 }  

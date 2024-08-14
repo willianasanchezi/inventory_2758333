@@ -1,3 +1,4 @@
+// co/app/endpoint/ProductoEndpoint.java
 package co.app.endpoint;
 
 import co.app.dao.ProductoDAO;
@@ -5,6 +6,10 @@ import co.app.model.Producto;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 import java.util.List;
 
@@ -15,9 +20,37 @@ public class ProductoEndpoint {
 
     private ProductoDAO productoDAO = new ProductoDAO();
 
+    /*
     @GET
     public List<Producto> getAllProductos() {
         return productoDAO.obtenerTodosLosProductos();
+    }
+    */
+
+    @GET
+    public List<Producto> getAllProductos(@QueryParam("nombreProducto") String nombreProducto,
+                                          @QueryParam("marca") String marca,
+                                          @QueryParam("modelo") String modelo,
+                                          @QueryParam("cantidadMemoria") String cantidadMemoria,
+                                          @QueryParam("capacidadDisco") String capacidadDisco,
+                                          @QueryParam("fechaRegistroInicio") String fechaRegistroInicio,
+                                          @QueryParam("fechaRegistroFin") String fechaRegistroFin) {
+        Timestamp inicio = null;
+        Timestamp fin = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            if (fechaRegistroInicio != null) {
+                inicio = new Timestamp(dateFormat.parse(fechaRegistroInicio).getTime());
+            }
+            if (fechaRegistroFin != null) {
+                fin = new Timestamp(dateFormat.parse(fechaRegistroFin).getTime());
+            }
+        } catch (ParseException e) {
+            throw new BadRequestException("Formato de fecha inválido. Use 'yyyy-MM-dd HH:mm:ss'.");
+        }
+
+        return productoDAO.buscarProductosConFiltros(nombreProducto, marca, modelo, cantidadMemoria, capacidadDisco, inicio, fin);
     }
 
     @GET

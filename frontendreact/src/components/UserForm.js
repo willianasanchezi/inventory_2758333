@@ -1,12 +1,14 @@
 // src/components/UserForm.js
 import React, { useState, useEffect } from 'react';
-import { getRoles, createUser } from '../services/userService';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getRoles, createUser, getUser, updateUser } from '../services/userService';
 import { useAuth } from '../contexts/AuthContext'; // Importa el contexto de autenticación
 
 const UserForm = () => {
     const { hasRole } = useAuth(); // Usa el hook de autenticación
     const isAdmin = hasRole('ADMIN'); // Verifica si el usuario tiene el rol de admin
-
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [roles, setRoles] = useState([]);
     const [formData, setFormData] = useState({
         nombreCompleto: '',
@@ -22,11 +24,24 @@ const UserForm = () => {
                 const rolesData = await getRoles();
                 setRoles(rolesData);
             } catch (error) {
-                console.error('Error al obtene el rol', error);
+                console.error('Error al obtener los roles', error);
             }
         };
+
+        const fetchUser = async () => {
+            if (id) {
+                try {
+                    const userData = await getUser(id);
+                    setFormData(userData);
+                } catch (error) {
+                    console.error('Error al obtener el usuario', error);
+                }
+            }
+        };
+
         fetchRoles();
-    }, []);
+        fetchUser();
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -39,25 +54,23 @@ const UserForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createUser(formData);
-            alert('Usuario creado exitosamente');
-            // Limpiar el formulario después de la creación exitosa
-            setFormData({
-                nombreCompleto: '',
-                identificacion: '',
-                correoElectronico: '',
-                contrasena: '',
-                codigoRol: ''
-            });
+            if (id) {
+                await updateUser(id, formData);
+                alert('Usuario actualizado exitosamente');
+            } else {
+                await createUser(formData);
+                alert('Usuario creado exitosamente');
+            }
+            navigate('/users-list');
         } catch (error) {
-            console.error('Error al crear el usuario', error);
-            alert('Error al crear el usuario');
+            console.error('Error al guardar el usuario', error);
+            alert('Error al guardar el usuario');
         }
     };
 
     return (
         <div className="container mt-5">
-            <h2>Gestión de Usuarios</h2>
+            <h2>{id ? 'Editar Usuario' : 'Crear Usuario'}</h2>
             {isAdmin ? (
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -93,17 +106,19 @@ const UserForm = () => {
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label>Contraseña</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            name="contrasena"
-                            value={formData.contrasena}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    {!id && (
+                        <div className="form-group">
+                            <label>Contraseña</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                name="contrasena"
+                                value={formData.contrasena}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    )}
                     <div className="form-group">
                         <label>Rol</label>
                         <select
@@ -122,7 +137,7 @@ const UserForm = () => {
                         </select>
                     </div>
                     <button type="submit" className="btn btn-primary mt-3">
-                        Crear Usuario
+                        {id ? 'Actualizar Usuario' : 'Crear Usuario'}
                     </button>
                 </form>
             ) : (
