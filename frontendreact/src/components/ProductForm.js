@@ -15,7 +15,8 @@ const ProductForm = () => {
         capacidadDisco: '',
         estado: '',
         cantidad: '',
-        precioUnitario: ''
+        precioUnitario: '',
+        fechaRegistro: ''
     });
 
     const handleChange = (e) => {
@@ -31,7 +32,7 @@ const ProductForm = () => {
         try {
             await createProduct(formData);
             alert('Producto creado exitosamente');
-            navigate('/products-list');
+            navigate('/products-search');
         } catch (error) {
             console.error('Error al guardar el producto', error);
             alert('Error al guardar el producto');
@@ -42,6 +43,28 @@ const ProductForm = () => {
         <div className="container mt-5">
             <h2>Crear Producto</h2>
             <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Código</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="codigo"
+                        value={formData.codigo}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Nombre del Producto</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="nombreProducto"
+                        value={formData.nombreProducto}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
                 <div className="form-group">
                     <label>Descripción</label>
                     <input
@@ -132,6 +155,17 @@ const ProductForm = () => {
                         required
                     />
                 </div>
+                <div className="form-group">
+                    <label>Fecha de Registro</label>
+                    <input
+                        type="datetime-local"
+                        className="form-control"
+                        name="fechaRegistro"
+                        value={formData.fechaRegistro}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
                 <button type="submit" className="btn btn-primary mt-3">
                     Crear Producto
                 </button>
@@ -141,3 +175,4 @@ const ProductForm = () => {
 };
 
 export default ProductForm;
+

@@ -28,6 +28,9 @@ const UserListForm = () => {
     return (
         <div className="container">
             <h2 className="my-4">Listado de usuarios</h2>
+            <div className="mt-4">
+                <Link to="/users" className="btn btn-primary">Crear Usuario</Link>
+            </div>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -56,9 +59,7 @@ const UserListForm = () => {
                     ))}
                 </tbody>
             </table>
-            <div className="mt-4">
-                <Link to="/users" className="btn btn-primary">Crear Usuario</Link>
-            </div>
+
             {/* <BackToMenuButton /> */}
         </div>
     );

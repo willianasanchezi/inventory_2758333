@@ -5,17 +5,17 @@ import BackToMenuButton from './BackToMenuButton';
 
 const ProductSearchForm = () => {
   const [searchParams, setSearchParams] = useState({
-    idProducto: '',
-    codigo: '',
+    /*idProducto: '',
+    codigo: '', */
     nombreProducto: '',
     descripcion: '',
     marca: '',
     modelo: '',
     cantidadMemoria: '',
     capacidadDisco: '',
-    estado: '',
+    /*estado: '',
     cantidad: '',
-    precioUnitario: '',
+    precioUnitario: '',*/
     fechaRegistro: '',
   });
   const [products, setProducts] = useState([]);

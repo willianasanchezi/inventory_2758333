@@ -125,6 +125,7 @@ public class ProductoDAO {
         return rowDeleted;  
     }
 
+
     public List<Producto> buscarProductosConFiltros(String nombreProducto, String marca, String modelo, String cantidadMemoria, String capacidadDisco, Timestamp fechaRegistroInicio, Timestamp fechaRegistroFin) {
         List<Producto> productosFiltrados = new ArrayList<>();
         List<Object> parametros = new ArrayList<>();
