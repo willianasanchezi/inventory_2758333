@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRoles, createUser, getUser, updateUser } from '../services/userService';
-import { useAuth } from '../contexts/AuthContext'; // Importa el contexto de autenticación
+import { useAuth } from '../contexts/AuthContext';
 
 const UserForm = () => {
-    const { hasRole } = useAuth(); // Usa el hook de autenticación
-    const isAdmin = hasRole('ADMIN'); // Verifica si el usuario tiene el rol de admin
+    const { hasRole, currentUser } = useAuth();
+    const isAdmin = hasRole('ADMIN');
     const { id } = useParams();
     const navigate = useNavigate();
     const [roles, setRoles] = useState([]);
@@ -15,7 +15,8 @@ const UserForm = () => {
         identificacion: '',
         correoElectronico: '',
         contrasena: '',
-        codigoRol: ''
+        codigoRol: '',
+        userCreoRegistro: ''
     });
 
     useEffect(() => {
@@ -54,6 +55,13 @@ const UserForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (!id) {
+                if (!currentUser) {
+                    throw new Error('Usuario no autenticado');
+                }
+                formData.userCreoRegistro = currentUser; //.user;
+            }
+            console.log('Formulario de datos:', formData);
             if (id) {
                 await updateUser(id, formData);
                 alert('Usuario actualizado exitosamente');
@@ -106,7 +114,7 @@ const UserForm = () => {
                             required
                         />
                     </div>
-                    {/* {!id && ( */}
+                    {!id && (
                         <div className="form-group">
                             <label>Contraseña</label>
                             <input
@@ -118,7 +126,7 @@ const UserForm = () => {
                                 required
                             />
                         </div>
-                    {/* })} */}
+                    )}
                     <div className="form-group">
                         <label>Rol</label>
                         <select

@@ -34,7 +34,7 @@ public class LoginEndpoint {
                     .sign(Algorithm.HMAC256(SECRET_KEY));
             return Response.ok(new AuthResponse(token)).build();
         } else {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid username or password").build();
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Usuario o contraseña no es valido").build();
         }
     }
 
@@ -44,7 +44,8 @@ public class LoginEndpoint {
         ResultSet rs = null;
         try {
             conn = DatabaseConnection.getConnection();
-            String sql = "SELECT contrasena, codigo_rol FROM usuarios WHERE correo_electronico = ?";
+            //String sql = "SELECT contrasena, codigo_rol FROM usuarios WHERE correo_electronico = ?";
+            String sql = "SELECT contrasena, codigo_rol FROM usuarios WHERE correo_electronico = ? AND estado_usuario = 'Activo'";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             rs = stmt.executeQuery();
