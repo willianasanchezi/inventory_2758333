@@ -31,7 +31,7 @@ const LoginForm = () => {
             const user = decodedToken.sub
             console.log('Usuario:', user);
             console.log('Token:', data.token);
-            login(data.token, roles, user); // Asegúrate de pasar el objeto `user`
+            login(data.token, roles, user);
         } catch (error) {
             console.error('Error:', error);
             setError('Login failed: ' + error.message);
