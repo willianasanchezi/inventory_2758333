@@ -1,3 +1,4 @@
+// co/app/model/Producto.java
 package co.app.model;
 
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ public class Producto {
     private int cantidad;
     private BigDecimal precioUnitario;
     private Timestamp fechaRegistro;
+    private String userCreoRegistro;
 
     // Constructor sin parámetros
     public Producto() {}
@@ -23,7 +25,7 @@ public class Producto {
     // Constructor con todos los parámetros
     public Producto(int idProducto, String codigo, String nombreProducto, String descripcion, String marca, String modelo,
                     String cantidadMemoria, String capacidadDisco, String estado, int cantidad, BigDecimal precioUnitario,
-                    Timestamp fechaRegistro) {
+                    Timestamp fechaRegistro, String userCreoRegistro) {
         this.idProducto = idProducto;
         this.codigo = codigo;
         this.nombreProducto = nombreProducto;
@@ -36,6 +38,7 @@ public class Producto {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.fechaRegistro = fechaRegistro;
+        this.userCreoRegistro = userCreoRegistro;
     }
 
     // Getters y Setters
@@ -135,4 +138,8 @@ public class Producto {
     public void setFechaRegistro(Timestamp fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    public String getUserCreoRegistro() { return userCreoRegistro; }
+
+    public void setUserCreoRegistro(String userCreoRegistro) { this.userCreoRegistro = userCreoRegistro; }
 }
