@@ -43,3 +43,12 @@ export const updateUser = async (id, userData) => {
     }
 };
 
+export const getUsers = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/usuarios/`);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener el usuario con id ${id}', error);
+        throw error;
+    }
+};
