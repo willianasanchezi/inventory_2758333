@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { createAssigned } from '../services/assignedService';
-import { getProducts } from '../services/productService';
+import { getProducts, updateProductStatus } from '../services/productService';
 import { getUsers } from '../services/userService';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -72,6 +72,15 @@ const AssignedForm = () => {
             };
 
             await createAssigned(dataToSend);
+
+            // Actualizar el estado del producto
+            try {
+                await updateProductStatus(dataToSend.idProducto, 'Asignado');
+            } catch (updateError) {
+                console.error('Error al actualizar el estado del producto', updateError);
+                alert('Asignación creada, pero hubo un error al actualizar el estado del producto');
+            }
+
             alert('Asignación creada exitosamente');
             navigate('/products-list-available');
         } catch (error) {

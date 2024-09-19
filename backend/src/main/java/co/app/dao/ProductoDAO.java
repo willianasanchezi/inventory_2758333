@@ -14,7 +14,7 @@ public class ProductoDAO {
     private static final String INSERT_PRODUCTO_SQL = "INSERT INTO productos (codigo, nombre_producto, descripcion, marca, modelo, cantidad_memoria, capacidad_disco, estado, cantidad, precio_unitario, user_creo_registro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SELECT_ALL_PRODUCTOS = "SELECT * FROM productos";
     private static final String SELECT_PRODUCTO_BY_ID = "SELECT * FROM productos WHERE id_producto = ?";
-    private static final String UPDATE_PRODUCTO_SQL = "UPDATE productos SET codigo = ?, nombre_producto = ?, descripcion = ?, marca = ?, modelo = ?, cantidad_memoria = ?, capacidad_disco = ?, estado = ?, cantidad = ?, precio_unitario = ?, user_creo_registro = ?  WHERE id_producto = ?";
+    private static final String UPDATE_PRODUCTO_SQL = "UPDATE productos SET id_producto = ?, nombre_producto = ?, descripcion = ?, marca = ?, modelo = ?, cantidad_memoria = ?, capacidad_disco = ?, estado = ?, cantidad = ?, precio_unitario = ?, user_creo_registro = ? WHERE id_producto = ?";
     private static final String DELETE_PRODUCTO_SQL = "DELETE FROM productos WHERE id_producto = ?";
 
     public void insertarProducto(Producto producto) {
@@ -95,9 +95,11 @@ public class ProductoDAO {
 
     public boolean actualizarProducto(Producto producto) {
         boolean rowUpdated = false;
+        System.out.println("producto.getUserCreoRegistro(): " + producto.getUserCreoRegistro());
+        System.out.println("producto.getCodigo: " + producto.getCodigo());
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCTO_SQL)) {
-            preparedStatement.setString(1, producto.getCodigo());
+            preparedStatement.setInt(1, producto.getIdProducto());
             preparedStatement.setString(2, producto.getNombreProducto());
             preparedStatement.setString(3, producto.getDescripcion());
             preparedStatement.setString(4, producto.getMarca());
@@ -107,12 +109,14 @@ public class ProductoDAO {
             preparedStatement.setString(8, producto.getEstado());
             preparedStatement.setInt(9, producto.getCantidad());
             preparedStatement.setBigDecimal(10, producto.getPrecioUnitario());
-            preparedStatement.setInt(11, producto.getIdProducto());
-            preparedStatement.setString(12, producto.getUserCreoRegistro());
+            preparedStatement.setString(11, producto.getUserCreoRegistro());
+            preparedStatement.setInt(12, producto.getIdProducto());
 
             rowUpdated = preparedStatement.executeUpdate() > 0;
+            System.out.println("rowUpdated ProductoDAO: " + rowUpdated);
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("ProductoDAO |actualizarProducto | catch ");
         }
         return rowUpdated;
     }

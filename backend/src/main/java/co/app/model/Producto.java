@@ -139,7 +139,11 @@ public class Producto {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public String getUserCreoRegistro() { return userCreoRegistro; }
+    public String getUserCreoRegistro() { 
+        return userCreoRegistro; 
+    }
 
-    public void setUserCreoRegistro(String userCreoRegistro) { this.userCreoRegistro = userCreoRegistro; }
+    public void setUserCreoRegistro(String userCreoRegistro) {
+         this.userCreoRegistro = userCreoRegistro; 
+        }
 }

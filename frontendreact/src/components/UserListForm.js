@@ -29,7 +29,7 @@ const UserListForm = () => {
         <div className="container">
             <h2 className="my-4">Listado de usuarios</h2>
             <div className="mt-4">
-                <Link to="/users" className="btn btn-primary">Crear Usuario</Link>
+                <Link to="/users-create" className="btn btn-primary">Crear Usuario</Link>
             </div>
             <table className="table table-striped">
                 <thead>
@@ -53,7 +53,7 @@ const UserListForm = () => {
                             {/* <td>{user.contrasena}</td>  */}
                             <td>{getRoleName(user.codigoRol)}</td>
                             <td>
-                                <Link to={`/users/edit/${user.idUsuario}`} className="btn btn-warning btn-sm">Editar</Link>
+								<Link to={`/users/edit/${user.idUsuario}`} className="btn btn-primary">Editar</Link>
                             </td>
                         </tr>
                     ))}

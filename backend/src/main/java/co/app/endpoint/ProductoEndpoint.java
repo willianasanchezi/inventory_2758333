@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 import java.util.List;
+import java.util.Map;
 
 @Path("/productos")
 @Produces(MediaType.APPLICATION_JSON)
@@ -77,6 +78,51 @@ public class ProductoEndpoint {
             return Response.ok(producto).build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();
+    }
+
+    @PATCH
+    @Path("/{id}")
+    public Response updateProductStatus(@PathParam("id") int id, Map<String, String> fields) {
+        System.out.println("fields: " + fields);
+        try {
+            Producto producto = productoDAO.obtenerProductoPorId(id);
+            System.out.println("Producto: " + producto);
+
+            if (producto == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+            // Actualiza solo los campos proporcionados en el cuerpo de la solicitud
+            fields.forEach((k, v) -> {
+                switch (k) {
+                    case "estado":
+                        producto.setEstado(v);
+                        System.out.println("k:" + k);
+                        System.out.println("v:" + v);
+
+                        break;
+                    // Agrega más campos aquí si es necesario
+                    default:
+                        System.out.println("ProductoEndpoint | Default ISAW ");
+                        // Manejo de campos no reconocidos si es necesario
+                        break;
+                }
+            });
+            System.out.println("Producto despues de la actualizacion: " + producto.getEstado());
+            
+            System.out.println("Producto - Estado: " + productoDAO.actualizarProducto(producto));
+            if (productoDAO.actualizarProducto(producto)) {
+                System.out.println("Response.ok(producto).build()");
+                return Response.ok(producto).build();
+            } else {
+                System.out.println("Response.status(Response.Status.INTERNAL_SERVER_ERROR).build()");
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (Exception e) {
+            // Registra el error en los logs del servidor
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
     }
 
     @DELETE

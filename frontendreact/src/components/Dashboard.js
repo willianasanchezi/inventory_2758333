@@ -23,9 +23,10 @@ const Menu = () => {
     return (  
         <div className="d-flex flex-column vh-100 bg-light p-3">  
             <h2>Menú</h2>  
-            <p>Bienvenido al menú.</p>  
+            <p>Bienvenido al menú.</p>
+            <div className="flex-grow-1 overflow-auto">
             <ul className="list-group list-group-flush mb-3">  
-                {isAdmin && (  
+                {isAdmin && (
                     <>  
                         <li className="list-group-item">  
                             <Link to="/roles" className="nav-link">Roles</Link>  
@@ -85,7 +86,8 @@ const Menu = () => {
                 <li className="list-group-item">  
                     <Link to="/queries" className="nav-link">Consultas</Link>  
                 </li>  
-            </ul>  
+            </ul>
+            </div>
             <button className="btn btn-danger mt-auto" onClick={handleLogout}>Logout</button>  
         </div>  
     );  

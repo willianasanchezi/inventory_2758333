@@ -21,3 +21,9 @@ export const getProducts = async () => {
         throw error;  
     }  
 };  
+
+export const updateProductStatus = async (idProducto, estado) => {
+    const response = await axios.patch(`${API_URL}/${idProducto}`, { estado });
+    console.log('Actualizacion estado:', response.data)
+    return response.data;
+};
