@@ -1,5 +1,5 @@
 // UsuarioEndpoint.java
-package co.app.resources;
+package co.app.endpoint;
 
 import co.app.dao.UsuarioDAO;
 import co.app.model.Usuario;

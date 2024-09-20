@@ -7,31 +7,33 @@ public class Asignacion {
     private int idAsignacion;
     private int idProducto;
     private int idUsuario;
-    private Timestamp fechaCreacion;
-    private Timestamp fechaAsignacion;
-    private Timestamp fechaDevolucionProgramada;
-    private Timestamp fechaDevolucionReal;
-    private String estadoAsignacion;
-    private String tipoAsignacion;
-    private String observaciones;
+    private Timestamp asigFechaCreacion;
+    private Timestamp asigFechaAsignacion;
+    private Timestamp asigFechaDevolucionProgramada;
+    private Timestamp asigFechaDevolucionReal;
+    private String asigEstadoAsignacion;
+    private String asigTipoAsignacion;
+    private String asigObservaciones;
 
     // Constructor sin parámetros
-    public Asignacion() {}
+    public Asignacion() {
+    }
 
     // Constructor con todos los parámetros
-    public Asignacion(int idAsignacion, int idProducto, int idUsuario, Timestamp fechaCreacion, Timestamp fechaAsignacion,
-                      Timestamp fechaDevolucionProgramada, Timestamp fechaDevolucionReal, String estadoAsignacion,
-                      String tipoAsignacion, String observaciones) {
+    public Asignacion(int idAsignacion, int idProducto, int idUsuario, Timestamp asigFechaCreacion,
+            Timestamp asigFechaAsignacion,
+            Timestamp asigFechaDevolucionProgramada, Timestamp asigFechaDevolucionReal, String asigEstadoAsignacion,
+            String asigTipoAsignacion, String asigObservaciones) {
         this.idAsignacion = idAsignacion;
         this.idProducto = idProducto;
         this.idUsuario = idUsuario;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaAsignacion = fechaAsignacion;
-        this.fechaDevolucionProgramada = fechaDevolucionProgramada;
-        this.fechaDevolucionReal = fechaDevolucionReal;
-        this.estadoAsignacion = estadoAsignacion;
-        this.tipoAsignacion = tipoAsignacion;
-        this.observaciones = observaciones;
+        this.asigFechaCreacion = asigFechaCreacion;
+        this.asigFechaAsignacion = asigFechaAsignacion;
+        this.asigFechaDevolucionProgramada = asigFechaDevolucionProgramada;
+        this.asigFechaDevolucionReal = asigFechaDevolucionReal;
+        this.asigEstadoAsignacion = asigEstadoAsignacion;
+        this.asigTipoAsignacion = asigTipoAsignacion;
+        this.asigObservaciones = asigObservaciones;
     }
 
     // Getters y Setters
@@ -59,59 +61,59 @@ public class Asignacion {
         this.idUsuario = idUsuario;
     }
 
-    public Timestamp getFechaCreacion() {
-        return fechaCreacion;
+    public Timestamp getAsigFechaCreacion() {
+        return asigFechaCreacion;
     }
 
-    public void setFechaCreacion(Timestamp fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setAsigFechaCreacion(Timestamp asigFechaCreacion) {
+        this.asigFechaCreacion = asigFechaCreacion;
     }
 
-    public Timestamp getFechaAsignacion() {
-        return fechaAsignacion;
+    public Timestamp getAsigFechaAsignacion() {
+        return asigFechaAsignacion;
     }
 
-    public void setFechaAsignacion(Timestamp fechaAsignacion) {
-        this.fechaAsignacion = fechaAsignacion;
+    public void setAsigFechaAsignacion(Timestamp asigFechaAsignacion) {
+        this.asigFechaAsignacion = asigFechaAsignacion;
     }
 
-    public Timestamp getFechaDevolucionProgramada() {
-        return fechaDevolucionProgramada;
+    public Timestamp getAsigFechaDevolucionProgramada() {
+        return asigFechaDevolucionProgramada;
     }
 
-    public void setFechaDevolucionProgramada(Timestamp fechaDevolucionProgramada) {
-        this.fechaDevolucionProgramada = fechaDevolucionProgramada;
+    public void setAsigFechaDevolucionProgramada(Timestamp asigFechaDevolucionProgramada) {
+        this.asigFechaDevolucionProgramada = asigFechaDevolucionProgramada;
     }
 
-    public Timestamp getFechaDevolucionReal() {
-        return fechaDevolucionReal;
+    public Timestamp getAsigFechaDevolucionReal() {
+        return asigFechaDevolucionReal;
     }
 
-    public void setFechaDevolucionReal(Timestamp fechaDevolucionReal) {
-        this.fechaDevolucionReal = fechaDevolucionReal;
+    public void setAsigFechaDevolucionReal(Timestamp asigFechaDevolucionReal) {
+        this.asigFechaDevolucionReal = asigFechaDevolucionReal;
     }
 
-    public String getEstadoAsignacion() {
-        return estadoAsignacion;
+    public String getAsigEstadoAsignacion() {
+        return asigEstadoAsignacion;
     }
 
-    public void setEstadoAsignacion(String estadoAsignacion) {
-        this.estadoAsignacion = estadoAsignacion;
+    public void setAsigEstadoAsignacion(String asigEstadoAsignacion) {
+        this.asigEstadoAsignacion = asigEstadoAsignacion;
     }
 
-    public String getTipoAsignacion() {
-        return tipoAsignacion;
+    public String getAsigTipoAsignacion() {
+        return asigTipoAsignacion;
     }
 
-    public void setTipoAsignacion(String tipoAsignacion) {
-        this.tipoAsignacion = tipoAsignacion;
+    public void setAsigTipoAsignacion(String asigTipoAsignacion) {
+        this.asigTipoAsignacion = asigTipoAsignacion;
     }
 
-    public String getObservaciones() {
-        return observaciones;
+    public String getAsigObservaciones() {
+        return asigObservaciones;
     }
 
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
+    public void setAsigObservaciones(String asigObservaciones) {
+        this.asigObservaciones = asigObservaciones;
     }
 }
